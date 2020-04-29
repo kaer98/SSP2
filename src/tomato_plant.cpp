@@ -1,5 +1,5 @@
 #include <tomato_plant.h>
-
+#include <stdlib.h>
 void tomatoPlant::grow(int days, int fertilizer)
 {
     age++;
@@ -22,12 +22,15 @@ void tomatoPlant::harvestFruits()
         fruit_growth = 31;
     }
 }
+
 void tomatoPlant::growthRate(int water)
 {
-    growth_rate = 2;
+    float growth_modifier = rand() % 120 + 80;
+    growth_modifier = growth_modifier/100;
+    growth_rate = 2*growth_modifier;
     if (water < 1)
     {
-        growth_rate = 1;
+        growth_rate = 1*growth_modifier;
     }
 
 }
