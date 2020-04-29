@@ -12,6 +12,8 @@
 #include <greenhouse.h>
 using namespace std::chrono_literals;
 sf::RenderWindow window(sf::VideoMode(800, 600), "Tomato Smiulator");
+int  amount_cucumbers_harvested;
+int  amount_tomatoes_harvested; 
 void simulateOneDay(plantBase &a_plant, water &water, Fertilizer &fertilizer, int numPlants) 
 {
     a_plant.grow(1, fertilizer.getAmount(a_plant.getType()));
@@ -224,14 +226,17 @@ int main(int argc, char const *argv[])
         ImGui::Begin("Harvest");
             if (ImGui::Button("Harvest Tomatoes"))
             {
+                amount_tomatoes_harvested += countTomatoes(list_of_tomatos);
                 for (tomatoPlant &p : list_of_tomatos){
                     p.harvestFruits();
                 }                  //lav en funktion til at høsete fugterne
             }
             ImGui::SameLine();
-            ImGui::Text("Number of tomatos: %d", countTomatoes(list_of_tomatos));
+            ImGui::Text("Number of tomatoes: %d", countTomatoes(list_of_tomatos));
+            ImGui::Text("Harvested tomatoes: %d", amount_tomatoes_harvested);
             if (ImGui::Button("Harvest Cucumbers"))
             {
+                amount_cucumbers_harvested +=  countCucumbers(list_of_cumcumbers);
                 for (CucumberPlant &p : list_of_cumcumbers){
                     p.harvestFruits();
                 }               //lav en funktion til at høste frugterne
@@ -239,6 +244,7 @@ int main(int argc, char const *argv[])
             ImGui::SameLine();
             
             ImGui::Text("Number of Cucumbers: %d", countCucumbers(list_of_cumcumbers));
+            ImGui::Text("Harvested cucumbers: %d", amount_cucumbers_harvested);
             if (ImGui::Button("Remove sideskud"))           // hvad heder sideskud på englesk??
             {
                 /* code */
