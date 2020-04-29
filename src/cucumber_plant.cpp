@@ -1,5 +1,5 @@
 #include <cucumber_plant.h>
-
+#include <stdlib.h>
 void CucumberPlant::grow(int days, int fertilizer)
 {
         if (hight < 200) 
@@ -25,14 +25,13 @@ void CucumberPlant::harvestFruits()
 }
 
 void CucumberPlant::growthRate(int water)
-{   
+{   float growth_modifier = rand() % 120 + 80;
+    growth_modifier = growth_modifier/100;
+    growth_rate = 4*growth_modifier;
     if (water < 1)
     {
-        growth_rate = 1;
+        growth_rate = 1*growth_modifier;
     }
-    else
-    {
-        growth_rate = 4;
-    }
+
     
 }
