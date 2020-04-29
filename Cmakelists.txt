@@ -1,0 +1,24 @@
+cmake_minimum_required(VERSION 3.17)
+
+project(greenhouse_control)
+
+add_subdirectory(libs/SFML)
+
+set(IMGUI_SFML_FIND_SFML OFF)
+set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/libs/imgui)
+add_subdirectory(libs/imgui-sfml)
+
+include_directories(include
+                    libs/SFML/include
+                    lims/imgui
+                    libs/imgui-sfml)
+add_executable(tomato_example 
+src/tomato_example.cpp 
+src/tomato_plant.cpp
+src/cucumber_plant.cpp
+src/water.cpp
+src/fertilizer.cpp
+src/greenhouse.cpp
+)
+target_link_libraries(tomato_example sfml-graphics sfml-system ImGui-SFML::ImGui-SFML)
+
