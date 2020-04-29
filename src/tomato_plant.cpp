@@ -22,10 +22,6 @@ void tomatoPlant::harvestFruits()
         fruit_growth = 31;
     }
 }
-void tomatoPlant::grow_new_fruits()
-{
-    fruit_growth = 25;
-}
 void tomatoPlant::growthRate(int water)
 {
     growth_rate = 2;
