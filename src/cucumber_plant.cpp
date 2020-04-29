@@ -2,48 +2,26 @@
 
 void CucumberPlant::grow(int days, int fertilizer)
 {
-    if (fertilizer > 0)
-    {
         if (hight < 200) 
         {
             hight = hight + days * growth_rate;
         }
-    }
 
     fruit_growth = fruit_growth +1;
-    if (fruit_growth > 40)
+    if (fruit_growth > 32)
     {
-        if (hight >= 200)
-        {
-            num_cucumbers = 5;
-        }
-        else if (hight > 160)
-        {
-            num_cucumbers = 4;
-        }
-        else if (hight > 120)
-        {
-            num_cucumbers =3;
-        }
-        else if (hight > 80)
-        {
-            num_cucumbers =2;
-        }
-        else if (hight > 40)
-        {
-            num_cucumbers =1;
-        }
-    }
-    else
-    {
-        num_cucumbers = 0;
+        num_cucumbers = (fruit_growth-32)/4;
+        num_cucumbers > 5 ? num_cucumbers = 5: num_cucumbers = num_cucumbers;
     }
     
 }
 
 void CucumberPlant::harvestFruits()
 {
-    fruit_growth = 0;
+    if (num_cucumbers > 0){
+    fruit_growth = 33;
+    }
+    
 }
 
 void CucumberPlant::growthRate(int water)
