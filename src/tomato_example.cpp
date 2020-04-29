@@ -67,6 +67,8 @@ int main(int argc, char const *argv[])
     int numCucumberPlants = 1;
     int numTomatoPlants = 1;
     int days = 0;
+    float dayLength = 10;
+    bool light = false;
     std::vector<tomatoPlant> list_of_tomatos;
     std::vector<CucumberPlant> list_of_cumcumbers;
     for (int i = 0; i < 10; i++){
@@ -102,8 +104,9 @@ int main(int argc, char const *argv[])
         }
 
         
-        if (elapsed.count() > 1)
+        if (elapsed.count() > dayLength)
         {
+            days = days +1;
             start = std::chrono::high_resolution_clock::now();
 
             //simulate tomato plant
@@ -138,8 +141,22 @@ int main(int argc, char const *argv[])
             vector_tomato_stalk.push_back(tomato_stalk);
             growFruits(tomato_stalk.getPosition().x, vector_tomatos, list_of_tomatos[i], 1, tomato);              
         }
+        
+        if (elapsed.count()<(dayLength/2))
+        {
+            light = true;
+        }
+        else
+        {
+            light = false;
+        }
+        //create light visual
+        sf::CircleShape light_visual;
+        light_visual.setFillColor(sf::Color::Yellow);
+        light_visual.setPosition(300,300);
+        light_visual.setRadius(50);
 
-
+        
         //create cucumber plant visuals
         std::vector<sf::RectangleShape> vector_cucumber_stalk;
         std::vector<sf::CircleShape> vector_cucumbers;
@@ -229,8 +246,8 @@ int main(int argc, char const *argv[])
         ImGui::End();
 
         ImGui::Begin("Time");
-            days = days +1;
-            ImGui::Text("Days Simulated: %f", elapsed.count());
+            ImGui::SliderFloat("Day Length", &dayLength, 1,15);
+            ImGui::Text("Days Simulated: %d", days);
         ImGui::End();
 
         
@@ -238,7 +255,6 @@ int main(int argc, char const *argv[])
             ImGui::Text("Humidety: %d", my_greenhouse.getHumidity());
             ImGui::SameLine();
             ImGui::Text("%%");
-            ImGui::Text("Day: %d", days);
             ImGui::Text("Temperature: %d", my_greenhouse.getTemp());
             ImGui::SameLine();
             ImGui::Text("C");
@@ -275,6 +291,10 @@ int main(int argc, char const *argv[])
         if(my_water_reservoir.getAmount()>0)
         {
             window.draw(water_reservoir);
+        }
+        if (light == true)
+        {
+            window.draw(light_visual);
         }
 
 
