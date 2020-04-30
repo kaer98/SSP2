@@ -209,14 +209,14 @@ int main(int argc, char const *argv[])
         ImGui::End();
 
 
-        ImGui::Begin("Plants");
+                ImGui::Begin("Plants");
             ImGui::Text("Tomato plants: %d", numTomatoPlants);
-            if(ImGui::Button("Add tomato plant"))
+            if(ImGui::Button("Add tomato plant") && numTomatoPlants < 7)
             {
                 numTomatoPlants = numTomatoPlants + 1;
             }
             ImGui::Text("Cucumber plants: %d", numCucumberPlants);
-            if(ImGui::Button("Add cucumber plant"))
+            if(ImGui::Button("Add cucumber plant")&& numCucumberPlants < 7)
             {
                 numCucumberPlants = numCucumberPlants + 1;
             }           
