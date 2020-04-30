@@ -2,7 +2,7 @@
 
 void water::refill()
 {
-    amount=100;
+    amount=600;
 }
 void water::useWater(int amountUsed)
 {
