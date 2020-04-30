@@ -20,15 +20,20 @@ void simulateOneDay(plantBase &a_plant, water &water, Fertilizer &fertilizer, in
     water.useWater(numPlants);
     fertilizer.useFertilizer(numPlants,a_plant.getType());
 }
-
-void growFruits(int position, std::vector<sf::CircleShape> &vector_fruits, plantBase &a_plant, int numPlants, sf::CircleShape fruit)
+std::vector<sf::RectangleShape> vector_tomato_side;
+ sf::RectangleShape tomato_side;
+void growFruits(int position, std::vector<sf::CircleShape> &vector_fruits, plantBase &a_plant, int numPlants, sf::CircleShape fruit, std::vector<sf::RectangleShape> &vector_tomato_side)
 {
     for (size_t j = 1; j < numPlants+1; j++)
     {
         for (int i = 0; i < a_plant.getNumFruits()+1; i++)
         {                
             fruit.setPosition(position*j,600-i*a_plant.getMaxHight()/5);
-            vector_fruits.push_back(fruit);              
+            vector_fruits.push_back(fruit);          
+            tomato_side.setFillColor(sf::Color::Green);
+            tomato_side.setPosition(position*j, (610-i*a_plant.getMaxHight()/5));
+            tomato_side.setSize(sf::Vector2f{-10., 5.});
+            vector_tomato_side.push_back(tomato_side); 
         }
     }
 }
@@ -141,7 +146,8 @@ int main(int argc, char const *argv[])
             tomato_stalk.setPosition(space*(i+1),600);
             tomato_stalk.setSize(sf::Vector2f{5.0, -list_of_tomatos[i].getHight()});
             vector_tomato_stalk.push_back(tomato_stalk);
-            growFruits(tomato_stalk.getPosition().x, vector_tomatos, list_of_tomatos[i], 1, tomato);              
+            vector_tomato_side.push_back(tomato_side);
+            growFruits(tomato_stalk.getPosition().x, vector_tomatos, list_of_tomatos[i], 1, tomato, vector_tomato_side);              
         }
         
         if (elapsed.count()<(dayLength/2))
@@ -173,7 +179,8 @@ int main(int argc, char const *argv[])
             cucumber_stalk.setPosition((space*(i+1))-40,600);
             cucumber_stalk.setSize(sf::Vector2f{10.0, -list_of_cumcumbers[i].getHight()});
             vector_cucumber_stalk.push_back(cucumber_stalk);
-            growFruits(cucumber_stalk.getPosition().x,vector_cucumbers,list_of_cumcumbers[i],1,cucumbers);
+            vector_tomato_side.push_back(tomato_side);
+            growFruits(cucumber_stalk.getPosition().x,vector_cucumbers,list_of_cumcumbers[i],1,cucumbers, vector_tomato_side);
         }
 
         
@@ -318,7 +325,10 @@ int main(int argc, char const *argv[])
         {
             window.draw(light_visual);
         }
-
+        for (std::vector<sf::RectangleShape>::iterator it = vector_tomato_side.begin() ; it != vector_tomato_side.end(); ++it)
+        {
+            window.draw(*it);
+        }
 
         ImGui::SFML::Render(window);
 
