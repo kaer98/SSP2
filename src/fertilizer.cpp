@@ -2,7 +2,7 @@
 
 void Fertilizer::refill(int type)
 {
-    amount[type]=100;
+    amount[type]=600;
 }
 void Fertilizer::useFertilizer(int amountUsed, int type)
 {
