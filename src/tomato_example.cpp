@@ -17,7 +17,7 @@ int  amount_tomatoes_harvested;
 void simulateOneDay(plantBase &a_plant, water &water, Fertilizer &fertilizer, int numPlants) 
 {
     a_plant.grow(1, fertilizer.getAmount(a_plant.getType()));
-    water.useWater(2*numPlants);
+    water.useWater(numPlants);
     fertilizer.useFertilizer(numPlants,a_plant.getType());
 }
 
@@ -177,11 +177,22 @@ int main(int argc, char const *argv[])
         }
 
         
-        //vand reservoir
+        //vand reservoir visuals
         sf::RectangleShape water_reservoir{sf::Vector2f(100,100)};
         water_reservoir.setFillColor(sf::Color::Blue);
         water_reservoir.setPosition(300,200);                  
-        water_reservoir.setSize(sf::Vector2f(100, -my_water_reservoir.getAmount()));
+        water_reservoir.setSize(sf::Vector2f(50, -my_water_reservoir.getAmount()/6));
+        
+        //fertilizer visuals
+        std::vector<sf::RectangleShape> vector_fertilizer;
+        for (size_t i = 1; i <= 2; i++)
+        {
+            sf::RectangleShape fertilizer_visuals;
+            fertilizer_visuals.setFillColor(sf::Color{160,82,45});
+            fertilizer_visuals.setPosition(300+(i*55),200);
+            fertilizer_visuals.setSize(sf::Vector2f(50,-my_fertilizer.getAmount(i)/6));
+            vector_fertilizer.push_back(fertilizer_visuals);
+        }
 
         //UI
         ImGui::SFML::Update(window, deltaClock.restart());
@@ -293,10 +304,15 @@ int main(int argc, char const *argv[])
         {
             window.draw(*it);
         }
-        //draw water reservoir s
+        //draw water reservoir
         if(my_water_reservoir.getAmount()>0)
         {
             window.draw(water_reservoir);
+        }
+        //draw fertilizer
+        for (std::vector<sf::RectangleShape>::iterator it = vector_fertilizer.begin() ; it != vector_fertilizer.end(); ++it)
+        {
+            window.draw(*it);
         }
         if (light == true)
         {
