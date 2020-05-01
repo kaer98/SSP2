@@ -18,7 +18,6 @@ src/tomato_plant.cpp
 src/cucumber_plant.cpp
 src/water.cpp
 src/fertilizer.cpp
-src/greenhouse.cpp
 )
 target_link_libraries(tomato_example sfml-graphics sfml-system ImGui-SFML::ImGui-SFML)
 
