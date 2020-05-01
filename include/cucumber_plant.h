@@ -11,9 +11,12 @@ class CucumberPlant : public plantBase
         int getType() override {return type; };
         void grow(int days, int fertilizer) override;
         void growthRate(int water) override;
-        int getNumFruits() override { return num_cucumbers; };
+        int get_num_fruits() override { return num_cucumbers; };
         void harvestFruits() override;
-
+        int get_days_without_water(){return days_without_water;};
+        void set_days_without_water(){days_without_water++;};
+        void reset_days_without_water(){days_without_water=0;};
+        void kill(){alive = false;};
     private:
         int hight{0};
         float maxHight{200};
@@ -21,4 +24,6 @@ class CucumberPlant : public plantBase
         float growth_rate{4.0};
         int type = 2;
         int fruit_growth{1};
+        int days_without_water;
+        bool alive = true;
 };
