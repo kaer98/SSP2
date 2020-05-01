@@ -1,3 +1,4 @@
+//Including libraries and our classes
 #include <tomato_plant.h>
 #include <cucumber_plant.h>
 #include <vector>
@@ -10,82 +11,78 @@
 #include <water.h>
 #include <Fertilizer.h>
 #include <greenhouse.h>
+
 using namespace std::chrono_literals;
 sf::RenderWindow window(sf::VideoMode(800, 600), "Tomato Smiulator");
 int  amount_cucumbers_harvested;
 int  amount_tomatoes_harvested; 
-void simulateOneDay(plantBase &a_plant, water &water, Fertilizer &fertilizer, int numPlants) 
+bool draw_stalks = true;
+std::vector<sf::RectangleShape> vector_tomato_side;
+sf::RectangleShape tomato_side;
+
+void simulate_one_day(plantBase &a_plant, water &water, Fertilizer &fertilizer, int numPlants) 
 {
     a_plant.grow(1, fertilizer.getAmount(a_plant.getType()));
     water.useWater(numPlants);
     fertilizer.useFertilizer(numPlants,a_plant.getType());
 }
-std::vector<sf::RectangleShape> vector_tomato_side;
- sf::RectangleShape tomato_side;
 void growFruits(int position, std::vector<sf::CircleShape> &vector_fruits, plantBase &a_plant, int numPlants, sf::CircleShape fruit, std::vector<sf::RectangleShape> &vector_tomato_side)
 {
     for (size_t j = 1; j < numPlants+1; j++)
     {
-        for (int i = 0; i < a_plant.getNumFruits()+1; i++)
+        for (int i = 0; i < a_plant.get_num_fruits()+1; i++)
         {                
             fruit.setPosition(position*j,600-i*a_plant.getMaxHight()/5);
             vector_fruits.push_back(fruit);          
-            tomato_side.setFillColor(sf::Color::Green);
-            tomato_side.setPosition(position*j, (610-i*a_plant.getMaxHight()/5));
-            tomato_side.setSize(sf::Vector2f{-10., 5.});
-            vector_tomato_side.push_back(tomato_side); 
+            //tomato_side.setFillColor(sf::Color::Green);
+            //tomato_side.setPosition(position*j, (610-i*a_plant.getMaxHight()/5));
+            //tomato_side.setSize(sf::Vector2f{-10., 5.});
+            //vector_tomato_side.push_back(tomato_side); 
         }
     }
 }
 
-void drawFruits(int position, int height){
-        sf::RectangleShape fruit{sf::Vector2f(100,height)};
-        fruit.setFillColor(sf::Color::Green);
-        fruit.setPosition(300,300);  
-        window.draw(fruit);
-        
-}
-int countCucumbers(std::vector<CucumberPlant> &a_plant){
+int countCucumbers(std::vector<CucumberPlant> &a_plant)
+{
     int tot_num_of_fruits = 0;
-    for (plantBase &p : a_plant ){
-        tot_num_of_fruits = p.getNumFruits() + tot_num_of_fruits;
+    for (plantBase &p : a_plant )
+    {
+        tot_num_of_fruits = p.get_num_fruits() + tot_num_of_fruits;
     }
-    return tot_num_of_fruits;
-        
+    return tot_num_of_fruits;      
 }
-int countTomatoes(std::vector<tomatoPlant> &a_plant){
+
+int countTomatoes(std::vector<tomatoPlant> &a_plant)
+{
     int tot_num_of_fruits = 0;
-    for (plantBase &p : a_plant ){
-        tot_num_of_fruits = p.getNumFruits() + tot_num_of_fruits;
+    for (plantBase &p : a_plant )
+    {
+        tot_num_of_fruits = p.get_num_fruits() + tot_num_of_fruits;
     }
-    return tot_num_of_fruits;
-        
+    return tot_num_of_fruits;      
 }
 
 int main(int argc, char const *argv[])
-{
-
-    
+{    
     tomatoPlant my_tomato_plant;
     CucumberPlant my_cucumber_plant;
     water my_water_reservoir;
     Fertilizer my_fertilizer;
     Greenhouse my_greenhouse;
-    int numCucumberPlants = 1;
-    int numTomatoPlants = 1;
+    int num_cucumber_plants = 1;
+    int num_tomato_plants = 1;
     int days = 0;
     float dayLength = 10;
     bool light = false;
     std::vector<tomatoPlant> list_of_tomatos;
     std::vector<CucumberPlant> list_of_cumcumbers;
-    for (int i = 0; i < 10; i++){
+    for (int i = 0; i < 10; i++)
+    {
         list_of_tomatos.push_back(my_tomato_plant);
         list_of_cumcumbers.push_back(my_cucumber_plant);
     }
     
-   
     // create the window
-    
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
     sf::Clock deltaClock;
@@ -93,7 +90,6 @@ int main(int argc, char const *argv[])
     // run the program as long as the window is open
     while (window.isOpen())
     {
-        
         //std::this_thread::sleep_for(0.5s); //uncomment to have a delay.
         auto now = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed = now-start;
@@ -104,10 +100,11 @@ int main(int argc, char const *argv[])
         while (window.pollEvent(event))
         {
             ImGui::SFML::ProcessEvent(event);
-
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
+            {
                 window.close();
+            }
         }
 
         
@@ -117,29 +114,26 @@ int main(int argc, char const *argv[])
             start = std::chrono::high_resolution_clock::now();
 
             //simulate tomato plant
-            for (int i = 0; i < numTomatoPlants; i ++){
-                simulateOneDay(list_of_tomatos[i],my_water_reservoir,my_fertilizer,numTomatoPlants);
+            for (int i = 0; i < num_tomato_plants; i ++){
+                simulate_one_day(list_of_tomatos[i],my_water_reservoir,my_fertilizer,num_tomato_plants);
                 list_of_tomatos[i].growthRate(my_water_reservoir.getAmount());
             }
             
-            //simulateOneDay(list_of_tomatos[0],my_water_reservoir,my_fertilizer,numTomatoPlants);
+            //simulateOneDay(list_of_tomatos[0],my_water_reservoir,my_fertilizer,num_tomato_plants);
             //simulate cucumber plant
-            for (int i = 0; i < numCucumberPlants; i ++){
-                simulateOneDay(list_of_cumcumbers[i],my_water_reservoir,my_fertilizer,numCucumberPlants);
+            for (int i = 0; i < num_cucumber_plants; i ++){
+                simulate_one_day(list_of_cumcumbers[i],my_water_reservoir,my_fertilizer,num_cucumber_plants);
                 list_of_cumcumbers[i].growthRate(my_water_reservoir.getAmount());
             }
         }
         
-
-
-
         // create tomato plant visuals
         std::vector<sf::RectangleShape> vector_tomato_stalk;
         std::vector<sf::CircleShape> vector_tomatos;
         sf::CircleShape tomato(5);
         tomato.setFillColor(sf::Color{255,0,0});
         int space = 100;
-        for (int i = 0; i < numTomatoPlants; i++)
+        for (int i = 0; i < num_tomato_plants; i++)
         {
             sf::RectangleShape tomato_stalk;
             tomato_stalk.setFillColor(sf::Color::Green);
@@ -172,7 +166,7 @@ int main(int argc, char const *argv[])
         cucumbers.setFillColor(sf::Color::Yellow);
         
         space = 100;
-        for (int i = 0; i < numCucumberPlants; i++)
+        for (int i = 0; i < num_cucumber_plants; i++)
         {
             sf::RectangleShape cucumber_stalk;
             cucumber_stalk.setFillColor(sf::Color::Green);
@@ -183,7 +177,6 @@ int main(int argc, char const *argv[])
             growFruits(cucumber_stalk.getPosition().x,vector_cucumbers,list_of_cumcumbers[i],1,cucumbers, vector_tomato_side);
         }
 
-        
         //vand reservoir visuals
         sf::RectangleShape water_reservoir{sf::Vector2f(100,100)};
         water_reservoir.setFillColor(sf::Color::Blue);
@@ -205,38 +198,38 @@ int main(int argc, char const *argv[])
         ImGui::SFML::Update(window, deltaClock.restart());
 
         ImGui::Begin("water reservoir");
-        ImGui::Text("Amount water left: %d", my_water_reservoir.getAmount());
-        if(ImGui::Button("Refill"))
-        {
-            my_water_reservoir.refill();
-        }
+            ImGui::Text("Amount water left: %d", my_water_reservoir.getAmount());
+            if(ImGui::Button("Refill"))
+            {
+                my_water_reservoir.refill();
+            }
         ImGui::End();
         
 
         ImGui::Begin("Fertilizer");
-        ImGui::Text("Amount Tomato Fertilizer left: %d", my_fertilizer.getAmount(1));
-        if(ImGui::Button("Refill Tomato Fertilizer"))
-        {
-            my_fertilizer.refill(1);
-        }
-        ImGui::Text("Amount Tomato Fertilizer left: %d", my_fertilizer.getAmount(2));
-        if(ImGui::Button("Refill Cucumber Fertilizer"))
-        {
-            my_fertilizer.refill(2);
-        }
+            ImGui::Text("Amount Tomato Fertilizer left: %d", my_fertilizer.getAmount(1));
+            if(ImGui::Button("Refill Tomato Fertilizer"))
+            {
+                my_fertilizer.refill(1);
+            }
+            ImGui::Text("Amount Tomato Fertilizer left: %d", my_fertilizer.getAmount(2));
+            if(ImGui::Button("Refill Cucumber Fertilizer"))
+            {
+                my_fertilizer.refill(2);
+            }
         ImGui::End();
 
 
-                ImGui::Begin("Plants");
-            ImGui::Text("Tomato plants: %d", numTomatoPlants);
-            if(ImGui::Button("Add tomato plant") && numTomatoPlants < 7)
+        ImGui::Begin("Plants");
+            ImGui::Text("Tomato plants: %d", num_tomato_plants);
+            if(ImGui::Button("Add tomato plant") && num_tomato_plants < 7)
             {
-                numTomatoPlants = numTomatoPlants + 1;
+                num_tomato_plants = num_tomato_plants + 1;
             }
-            ImGui::Text("Cucumber plants: %d", numCucumberPlants);
-            if(ImGui::Button("Add cucumber plant")&& numCucumberPlants < 7)
+            ImGui::Text("Cucumber plants: %d", num_cucumber_plants);
+            if(ImGui::Button("Add cucumber plant")&& num_cucumber_plants < 7)
             {
-                numCucumberPlants = numCucumberPlants + 1;
+                num_cucumber_plants = num_cucumber_plants + 1;
             }           
         ImGui::End();
 
@@ -283,10 +276,6 @@ int main(int argc, char const *argv[])
             ImGui::SameLine();
             ImGui::Text("C");
         ImGui::End();
-        
-
-
-            
         
 
         // clear the window with black color
