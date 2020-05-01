@@ -8,5 +8,5 @@ public:
     void useFertilizer(int amountUsed, int type);
     
 private:
-    int amount[3] {100*100,100*100,100*100}; //*100 added so pressing refill is not needed 
+    int amount[3] {600,600,600}; //*100 added so pressing refill is not needed 
 };
