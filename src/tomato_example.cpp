@@ -257,7 +257,7 @@ int main(int argc, char const *argv[])
             
             ImGui::Text("Number of Cucumbers: %d", countCucumbers(list_of_cumcumbers));
             ImGui::Text("Harvested cucumbers: %d", amount_cucumbers_harvested);
-            if (ImGui::Button("Remove sideskud"))           // hvad heder sideskud på englesk??
+            if (ImGui::Button("Remove side branches"))           // hvad heder sideskud på englesk??
             {
                 /* code */
             }
