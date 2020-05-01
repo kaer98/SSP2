@@ -34,10 +34,10 @@ void growFruits(int position, std::vector<sf::CircleShape> &vector_fruits, plant
         {                
             fruit.setPosition(position*j,600-i*a_plant.getMaxHight()/5);
             vector_fruits.push_back(fruit);          
-            //tomato_side.setFillColor(sf::Color::Green);
-            //tomato_side.setPosition(position*j, (610-i*a_plant.getMaxHight()/5));
-            //tomato_side.setSize(sf::Vector2f{-10., 5.});
-            //vector_tomato_side.push_back(tomato_side); 
+            tomato_side.setFillColor(sf::Color::Green);
+            tomato_side.setPosition(position*j, (610-i*a_plant.getMaxHight()/5));
+            tomato_side.setSize(sf::Vector2f{-10., 5.});
+            vector_tomato_side.push_back(tomato_side); 
         }
     }
 }
