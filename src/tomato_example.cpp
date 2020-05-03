@@ -93,7 +93,6 @@ int main(int argc, char const *argv[])
     // run the program as long as the window is open
     while (window.isOpen())
     {
-        //std::this_thread::sleep_for(0.5s); //uncomment to have a delay.
         auto now = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed = now-start;
         std::cout << elapsed.count() << std::endl;
