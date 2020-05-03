@@ -16,7 +16,6 @@ using namespace std::chrono_literals;
 sf::RenderWindow window(sf::VideoMode(800, 600), "Tomato Smiulator");
 int  amount_cucumbers_harvested;
 int  amount_tomatoes_harvested; 
-bool draw_stalks = true;
 std::vector<sf::RectangleShape> vector_tomato_side;
 sf::RectangleShape tomato_side;
 //Function for simulating one day for any kind and of plant
