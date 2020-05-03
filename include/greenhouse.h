@@ -1,5 +1,5 @@
 #pragma once
-
+//Class for greenhouse
 class Greenhouse
 {
 public:
