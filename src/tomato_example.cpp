@@ -262,7 +262,7 @@ int main(int argc, char const *argv[])
 
         //Not utilized in the program, since our functional protoype would also only measure these values and not try and physically manipulate them 
         ImGui::Begin("Greenhouse");
-            ImGui::Text("Humidety: %d", my_greenhouse.getHumidity());
+            ImGui::Text("Humidity: %d", my_greenhouse.getHumidity());
             ImGui::SameLine();
             ImGui::Text("%%");
             ImGui::Text("Temperature: %d", my_greenhouse.getTemp());

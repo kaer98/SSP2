@@ -37,5 +37,6 @@ void CucumberPlant::growthRate(int water, int fertilizer)
     growth_modifier = growth_modifier/100;
     //If there is no water then the growthrate will be negative, if there is then it will grow as normal
     water < 1 ? growth_rate = -0.5*growth_modifier : growth_rate = 4*growth_modifier;
+    //If no fertilizer is left then fruitgrowth is pegged to 33. Below minimum requirement for growing fruits
     fertilizer < 1 ? fruit_growth = 33 : fruit_growth;
 }
