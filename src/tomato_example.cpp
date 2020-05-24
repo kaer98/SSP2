@@ -1,4 +1,4 @@
-//Including libraries and our classes
+//Including libraries and our classes.
 #include <tomato_plant.h>
 #include <cucumber_plant.h>
 #include <vector>
